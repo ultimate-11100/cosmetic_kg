@@ -1,0 +1,117 @@
+# 化妆品知识图谱配置文件
+
+# 数据库配置
+database:
+  neo4j:
+    uri: "bolt://localhost:7687"
+    username: "neo4j"
+    password: "password"
+    database: "cosmetic_kg"
+  
+  redis:
+    host: "localhost"
+    port: 6379
+    db: 0
+    password: null
+  
+  mysql:
+    host: "localhost"
+    port: 3306
+    database: "cosmetic_data"
+    username: "root"
+    password: "password"
+
+# API配置
+api:
+  host: "0.0.0.0"
+  port: 8000
+  debug: true
+  cors_origins: ["*"]
+  rate_limit: "100/minute"
+
+# 数据采集配置
+data_collection:
+  # 爬虫配置
+  scrapy:
+    concurrent_requests: 16
+    download_delay: 1
+    randomize_download_delay: 0.5
+    user_agents:
+      - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+      - "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+  
+  # 数据源配置
+  sources:
+    sephora:
+      base_url: "https://www.sephora.com"
+      enabled: true
+    ulta:
+      base_url: "https://www.ulta.com"
+      enabled: true
+    tmall:
+      base_url: "https://www.tmall.com"
+      enabled: true
+    xiaohongshu:
+      base_url: "https://www.xiaohongshu.com"
+      enabled: false  # 需要特殊处理
+
+# NLP配置
+nlp:
+  # 模型配置
+  models:
+    spacy_model: "zh_core_web_sm"
+    bert_model: "bert-base-chinese"
+    embedding_dim: 768
+  
+  # 实体识别
+  entity_types:
+    - "BRAND"      # 品牌
+    - "PRODUCT"    # 产品
+    - "INGREDIENT" # 成分
+    - "EFFECT"     # 功效
+    - "SKIN_TYPE"  # 肤质
+    - "PRICE"      # 价格
+    - "CATEGORY"   # 类别
+
+# 推荐系统配置
+recommendation:
+  # 算法配置
+  algorithms:
+    collaborative_filtering:
+      enabled: true
+      n_factors: 50
+      n_epochs: 20
+    
+    content_based:
+      enabled: true
+      similarity_threshold: 0.7
+    
+    knowledge_graph:
+      enabled: true
+      walk_length: 10
+      num_walks: 200
+  
+  # 推荐参数
+  parameters:
+    max_recommendations: 20
+    min_score: 0.5
+    diversity_weight: 0.3
+
+# 日志配置
+logging:
+  level: "INFO"
+  format: "{time:YYYY-MM-DD HH:mm:ss} | {level} | {name}:{function}:{line} - {message}"
+  file: "logs/cosmetic_kg.log"
+  rotation: "1 day"
+  retention: "30 days"
+
+# 缓存配置
+cache:
+  ttl: 3600  # 1小时
+  max_size: 1000
+  
+# 安全配置
+security:
+  secret_key: "your-secret-key-here"
+  algorithm: "HS256"
+  access_token_expire_minutes: 30
