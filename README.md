@@ -391,8 +391,7 @@ MIT License
 
 ## 联系方式
 
-- 项目维护者: [Your Name]
-- 邮箱: [your.email@example.com]
+- 邮箱: [418294908@QQ.com]
 - 项目主页: [https://github.com/your-repo/cosmetic_kg]
 - 问题反馈: [https://github.com/your-repo/cosmetic_kg/issues]
 
